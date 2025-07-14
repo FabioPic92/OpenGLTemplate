@@ -1,3 +1,6 @@
+#ifndef WINDOW_H
+#define WINDOW_H
+
 #include <string>
 #include <stdexcept>
 #include <iostream>
@@ -76,3 +79,5 @@ public:
         return m_window;
     }
 };
+
+#endif

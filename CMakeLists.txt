@@ -7,11 +7,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(INCLUDE_VULKAN "Active Vulkan" OFF)
 
-if(INCLUDE_VULKAN)
-	set(VULKAN_SDK_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/VulkanSDK-<versione>")
-	include_directories("${VULKAN_SDK_DIR}/Include")
-	link_directories("${VULKAN_SDK_DIR}/Lib")
-endif()
+# if(INCLUDE_VULKAN)
+# 	set(VULKAN_SDK_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/VulkanSDK-<versione>")
+# 	include_directories("${VULKAN_SDK_DIR}/Include")
+# 	link_directories("${VULKAN_SDK_DIR}/Lib")
+# endif()
 
 include_directories(external/glad/include)
 add_library(glad STATIC external/glad/src/glad.c)
@@ -31,7 +31,8 @@ add_executable(OpenGLTemplate
                main.cpp
                ${PROJECT_SOURCES})
 
-if(OpenGLTemplate)
+if(INCLUDE_VULKAN)
+	message("Hello2")
 	target_include_directories(OpenGLTemplate PRIVATE
 	    external/glad/include
 	    ${VULKAN_SDK_DIR}/Include
@@ -41,6 +42,7 @@ if(OpenGLTemplate)
 	    ${CMAKE_CURRENT_SOURCE_DIR}/include
 	)
 else()
+	message("Hello")
 	target_include_directories(OpenGLTemplate PRIVATE
 	    external/glad/include
 	    external/glfw/include
@@ -56,9 +58,9 @@ target_link_libraries(OpenGLTemplate
     glm
 )
 if(OpenGLTemplate)
-	if(WIN32)
-	    target_link_libraries(OpenGLTemplate vulkan-1)
-	elseif(UNIX)
-	    target_link_libraries(OpenGLTemplate vulkan ${CMAKE_DL_LIBS})
-	endif()
+	# if(WIN32)
+	#     target_link_libraries(OpenGLTemplate vulkan-1)
+	# elseif(UNIX)
+	#     target_link_libraries(OpenGLTemplate vulkan ${CMAKE_DL_LIBS})
+	# endif()
 endif()
